@@ -1,26 +1,34 @@
 // Mock Dashboard Data
 export const mockDashboardData = {
   summary: {
+    greeting: 'Welcome back, John! 👋',
     totalFollowers: 125420,
     totalImpressions: 2450000,
     totalEngagement: 45680,
-    avgEngagementRate: 18.6,
+    totalLikes: 28500,
+    totalViews: 385000,
+    engagementRate: 18.6,
+    likesGrowthPct: 24.5,
+    viewsGrowthPct: 12.3,
+    engGrowthPct: 4.2,
+    weeklyPostsAvg: 3.2,
+    weeklyGrowthPct: 8.7,
     followersGrowth: 12.5,
     impressionsGrowth: 8.2,
     engagementGrowth: 15.3
   },
 
   growthChart: [
-    { date: '2024-12-01', followers: 110000, impressions: 2100000, engagement: 39500 },
-    { date: '2024-12-02', followers: 111200, impressions: 2150000, engagement: 40200 },
-    { date: '2024-12-03', followers: 112500, impressions: 2200000, engagement: 41000 },
-    { date: '2024-12-04', followers: 113800, impressions: 2250000, engagement: 41800 },
-    { date: '2024-12-05', followers: 115000, impressions: 2300000, engagement: 42500 },
-    { date: '2024-12-06', followers: 116200, impressions: 2350000, engagement: 43200 },
-    { date: '2024-12-07', followers: 117500, impressions: 2380000, engagement: 44000 },
-    { date: '2024-12-08', followers: 118800, impressions: 2400000, engagement: 44500 },
-    { date: '2024-12-09', followers: 120100, impressions: 2420000, engagement: 45000 },
-    { date: '2024-12-10', followers: 121500, impressions: 2450000, engagement: 45680 },
+    { date: '2024-12-01', followers: 110000, impressions: 2100000, engagement: 39500, follows: 850, shares: 450 },
+    { date: '2024-12-02', followers: 111200, impressions: 2150000, engagement: 40200, follows: 920, shares: 480 },
+    { date: '2024-12-03', followers: 112500, impressions: 2200000, engagement: 41000, follows: 880, shares: 510 },
+    { date: '2024-12-04', followers: 113800, impressions: 2250000, engagement: 41800, follows: 950, shares: 520 },
+    { date: '2024-12-05', followers: 115000, impressions: 2300000, engagement: 42500, follows: 900, shares: 540 },
+    { date: '2024-12-06', followers: 116200, impressions: 2350000, engagement: 43200, follows: 970, shares: 560 },
+    { date: '2024-12-07', followers: 117500, impressions: 2380000, engagement: 44000, follows: 1020, shares: 580 },
+    { date: '2024-12-08', followers: 118800, impressions: 2400000, engagement: 44500, follows: 890, shares: 600 },
+    { date: '2024-12-09', followers: 120100, impressions: 2420000, engagement: 45000, follows: 940, shares: 620 },
+    { date: '2024-12-10', followers: 121500, impressions: 2450000, engagement: 45680, follows: 1100, shares: 650 },
   ],
 
   channels: [
@@ -78,7 +86,8 @@ export const mockDashboardData = {
       impressions: 45000,
       likes: 1200,
       comments: 350,
-      shares: 200
+      shares: 200,
+      thumbnail: null
     },
     {
       id: 'post2',
@@ -91,7 +100,8 @@ export const mockDashboardData = {
       impressions: 52000,
       likes: 2100,
       comments: 420,
-      shares: 150
+      shares: 150,
+      thumbnail: null
     },
     {
       id: 'post3',
@@ -104,7 +114,8 @@ export const mockDashboardData = {
       impressions: 38000,
       likes: 980,
       comments: 280,
-      shares: 320
+      shares: 320,
+      thumbnail: null
     },
     {
       id: 'post4',
@@ -117,7 +128,8 @@ export const mockDashboardData = {
       impressions: 18500,
       likes: 650,
       comments: 120,
-      shares: 95
+      shares: 95,
+      thumbnail: null
     },
     {
       id: 'post5',
@@ -130,11 +142,13 @@ export const mockDashboardData = {
       impressions: 0,
       likes: 0,
       comments: 0,
-      shares: 0
+      shares: 0,
+      thumbnail: null
     }
   ],
 
   usage: {
+    usagePercent: 45.2,
     apiCalls: {
       used: 2450,
       limit: 5000,
