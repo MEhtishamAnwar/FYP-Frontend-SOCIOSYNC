@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Sparkles, 
-  Send, 
   Image as ImageIcon, 
   Type, 
-  Video, 
-  Layout, 
   History, 
-  MoreHorizontal,
   Download,
   Copy,
   Plus,
@@ -16,10 +12,7 @@ import {
   Hand,
   Briefcase,
   Trophy,
-  Share2,
   RefreshCw,
-  Grid,
-  Settings2,
   Loader2,
   Check,
   X
@@ -35,10 +28,16 @@ const POLLINATIONS_LOADING_MESSAGES = [
   'Almost ready ✨',
 ];
 
+const DEFAULT_IMAGE_PROMPT =
+  'A futuristic storefront for a green sustainable brand, highly detailed, cinematic lighting';
+
+const buildPollinationsUrl = (prompt, seed) =>
+  `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=1024&height=1024&nologo=true&seed=${seed}`;
+
 const CreativeLab = () => {
   const { showToast } = useToast();
   const [textPrompt, setTextPrompt] = useState('');
-  const [imagePrompt, setImagePrompt] = useState('A futuristic storefront for a green sustainable brand, highly detailed, cinematic lighting');
+  const [imagePrompt, setImagePrompt] = useState(DEFAULT_IMAGE_PROMPT);
   const [selectedTone, setSelectedTone] = useState('Humanized');
   const [textOutput, setTextOutput] = useState('');
   const [currentTextCreationId, setCurrentTextCreationId] = useState(null);
@@ -82,11 +81,25 @@ const CreativeLab = () => {
     }
   };
 
+  const getSelectedToneId = () =>
+    tones.find((tone) => tone.name === selectedTone)?.id || 'humanized';
+
+  const resetWorkspace = () => {
+    setTextPrompt('');
+    setImagePrompt('');
+    setTextOutput('');
+    setImageOutputs([]);
+  };
+
+  const scrollToGenerators = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const handleGenerateCopy = async () => {
-    if (!textPrompt) return;
+    if (!textPrompt.trim()) return;
     try {
       setGeneratingText(true);
-      const toneId = tones.find(t => t.name === selectedTone)?.id || 'humanized';
+      const toneId = getSelectedToneId();
       const result = await aiService.generateCopy(textPrompt, toneId);
       setTextOutput(result.generatedText);
       setCurrentTextCreationId(result.creationId);
@@ -101,7 +114,7 @@ const CreativeLab = () => {
   };
 
   const handleGenerateImages = async () => {
-    if (!imagePrompt) return;
+    if (!imagePrompt.trim()) return;
     try {
       setGeneratingImages(true);
 
@@ -119,7 +132,7 @@ const CreativeLab = () => {
       // Step 2: Fetch image directly from Pollinations.ai
       console.log('[Image Gen] Fetching from Pollinations.ai:', enhancedPrompt);
       const seed = Math.floor(Math.random() * 1000000);
-      const pollinationsUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(enhancedPrompt)}?width=1024&height=1024&nologo=true&seed=${seed}`;
+      const pollinationsUrl = buildPollinationsUrl(enhancedPrompt, seed);
       
       const imageRes = await fetch(pollinationsUrl);
       if (!imageRes.ok) {
@@ -169,7 +182,7 @@ const CreativeLab = () => {
   const handleExportText = async (format) => {
     if (!currentTextCreationId) return;
     try {
-      const result = await aiService.exportCreation(currentTextCreationId, format);
+      await aiService.exportCreation(currentTextCreationId, format);
       // For text/md, the backend sends the content directly
       // In this setup, we'll just handle it as a download if needed or alert
       showToast(`Text exported as ${format.toUpperCase()} successfully.`, 'success');
@@ -195,14 +208,14 @@ const CreativeLab = () => {
       setSelectedTone(tones.find(t => t.id === item.tone)?.name || 'Humanized');
       setCurrentTextCreationId(item.id);
       // Scroll to text generator
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      scrollToGenerators();
     } else {
       setImagePrompt(item.prompt || '');
       setImageOutputs(item.imageUrls || []);
       setCurrentImageCreationId(item.id);
       setImageLoaded(false); // Reset loaded state when selecting history
       // Scroll to image generator
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      scrollToGenerators();
     }
     setIsHistoryModalOpen(false);
   };
@@ -461,7 +474,7 @@ const CreativeLab = () => {
           ))}
           
           <button 
-            onClick={() => { setTextPrompt(''); setImagePrompt(''); setTextOutput(''); setImageOutputs([]); }}
+            onClick={resetWorkspace}
             className="flex-shrink-0 w-48 p-4 rounded-[1.5rem] bg-surface-container-low border-ghost border-dashed flex items-center justify-center gap-3 text-[10px] font-bold text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all uppercase tracking-widest"
           >
             <Plus className="w-4 h-4" />
