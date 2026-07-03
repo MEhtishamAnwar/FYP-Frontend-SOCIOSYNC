@@ -10,7 +10,8 @@ import {
   Users,
   HelpCircle,
   LogOut,
-  Zap
+  Zap,
+  ShieldCheck
 } from 'lucide-react';
 
 const API_BASE = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000';
@@ -33,6 +34,7 @@ const Sidebar = () => {
     { name: 'Publisher', path: '/publisher', icon: Share2 },
     { name: 'Analytics', path: '/analytics', icon: BarChart2 },
     { name: 'Settings', path: '/settings', icon: Settings },
+    { name: 'Admin', path: '/admin', icon: ShieldCheck },
   ];
 
   const mobileNavItems = navItems

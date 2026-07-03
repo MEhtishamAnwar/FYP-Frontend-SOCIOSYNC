@@ -11,6 +11,7 @@ import Publisher from './pages/Publisher';
 import CreativeLab from './pages/CreativeLab';
 import Integrations from './pages/Integrations';
 import Settings from './pages/Settings';
+import Admin from './pages/Admin';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
               <Route path="/analytics" element={<Analytics />} />
               <Route path="/integrations" element={<Integrations />} />
               <Route path="/settings" element={<Settings />} />
+              <Route path="/admin" element={<Admin />} />
             </Route>
           </Route>
 
