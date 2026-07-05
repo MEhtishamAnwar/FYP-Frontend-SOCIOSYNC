@@ -102,6 +102,35 @@ export const authService = {
     };
   },
 
+  resetPassword: async (email, password, confirmPassword) => {
+    await new Promise(resolve => setTimeout(resolve, 500));
+
+    if (password !== confirmPassword) {
+      return {
+        success: false,
+        message: 'Passwords do not match.'
+      };
+    }
+
+    const users = JSON.parse(localStorage.getItem('sociosync_users') || '[]');
+    const userIndex = users.findIndex(u => u.email === email);
+
+    if (userIndex === -1) {
+      return {
+        success: false,
+        message: 'No account found for that email address.'
+      };
+    }
+
+    users[userIndex].password = password;
+    localStorage.setItem('sociosync_users', JSON.stringify(users));
+
+    return {
+      success: true,
+      message: 'Your password has been reset successfully.'
+    };
+  },
+
   getMe: async () => {
     // Simulate network delay
     await new Promise(resolve => setTimeout(resolve, 300));
